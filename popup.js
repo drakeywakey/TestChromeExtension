@@ -47,10 +47,11 @@ function getCurrentTabUrl(callback) {
 function getImageUrl(url, callback, errorFunc) {
 	var apiKey = 'AIzaSyDnwV_UKKkmQMZZv6zPVVqMl-oaB-UbHeQ';
 	var cx = '002819554353851248804:lugf3xsvkpy';
+	var encodedUrl = encodeURIComponent(url);
 	var firstResult;
 	var request = new XMLHttpRequest();
 	var response;
-	var searchUrl = 'https://www.googleapis.com/customsearch/v1?key=' + apiKey + '&cx=' + cx + '&searchType=image&q=' + encodeURIComponent(url);
+	var searchUrl = 'https://www.googleapis.com/customsearch/v1?key=' + apiKey + '&cx=' + cx + '&searchType=image&q=' + encodedUrl;
 
 	request.open('GET', searchUrl);
 	request.responseType = 'json';
