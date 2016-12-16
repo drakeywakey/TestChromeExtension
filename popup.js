@@ -45,26 +45,28 @@ function getCurrentTabUrl(callback) {
 
 // Uses google's image search api
 function getImageUrl(url, callback, errorFunc) {
+	var apiKey = 'AIzaSyDnwV_UKKkmQMZZv6zPVVqMl-oaB-UbHeQ';
+	var cx = '002819554353851248804:lugf3xsvkpy';
 	var firstResult;
 	var request = new XMLHttpRequest();
 	var response;
-	var searchUrl ='https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=' + encodeURIComponent(url);
+	var searchUrl = 'https://www.googleapis.com/customsearch/v1?key=' + apiKey + '&cx=' + cx + '&searchType=image&q=' + encodeURIComponent(url);
 
 	request.open('GET', searchUrl);
 	request.responseType = 'json';
 
 	request.onload = function () {
 		response = request.response;
-		if (!(response && response.responseData && response.responseData.results && response.responseData.results.length)) {
+		if (!(response && response.items && response.items.length)) {
 			errorFunc('The image search returned no results.');
 			return;
 		}
 
-		firstResult = response.responseData.results[0];
+		firstResult = response.items[0].image;
 
-		imageUrl = firstResult.tbUrl;
-		width = parseInt(firstResult.tbWidth);
-		height = parseInt(firstResult.tbHeight);
+		imageUrl = firstResult.thumbnailLink;
+		width = firstResult.thumbnailWidth;
+		height = firstResult.thumbnailHeight;
 
 		//find out what console.assert does -- tutorial uses it here to assert the imageUrl, height and width all make sense.
 
